@@ -6,6 +6,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,33 +24,42 @@ Route::get('/', function () {
 });
 
 Route::get('/hello', [PagesController::class, 'index'])->name('hello');
-Route::get('/profile',[PagesController::class, 'profile'])->name('profile');
+Route::get('/profile', [PagesController::class, 'profile'])->name('profile');
 
 
-Route::get('/studentList',[StudentController::class, 'studentList'])->name('studentList')->middleware('ValidTeacher');
+Route::get('/studentList', [StudentController::class, 'studentList'])->name('studentList')->middleware('ValidTeacher');
 // Route::get('/studentEdit/{name}/{id}',[StudentController::class, 'studentEdit'])->name('studentEdit');
-Route::get('/studentEdit/{id}',[StudentController::class, 'studentEdit'])->name('studentEdit');
-Route::post('/studentEdit',[StudentController::class, 'studentEditSubmitted'])->name('studentEdit');
-Route::get('/studentDelete/{id}',[StudentController::class, 'studentDelete'])->name('studentDelete');
+Route::get('/studentEdit/{id}', [StudentController::class, 'studentEdit'])->name('studentEdit');
+Route::post('/studentEdit', [StudentController::class, 'studentEditSubmitted'])->name('studentEdit');
+Route::get('/studentDelete/{id}', [StudentController::class, 'studentDelete'])->name('studentDelete');
 
-Route::get('/studentCreate',[StudentController::class, 'studentCreate'])->name('studentCreate')->middleware('ValidTeacher');
-Route::post('/studentCreate',[StudentController::class, 'studentCreateSubmitted'])->name('studentCreate');
+Route::get('/studentCreate', [StudentController::class, 'studentCreate'])->name('studentCreate')->middleware('ValidTeacher');
+Route::post('/studentCreate', [StudentController::class, 'studentCreateSubmitted'])->name('studentCreate');
 
 //teacher
-Route::get('/teacherCreate',[TeacherController::class, 'teacherCreate'])->name('teacherCreate')->middleware('ValidTeacher');;
-Route::post('/teacherCreate',[TeacherController::class, 'teacherCreateSubmitted'])->name('teacherCreate');
-Route::get('/teacherList',[TeacherController::class, 'teacherList'])->name('teacherList')->middleware('ValidTeacher');;
+Route::get('/teacherCreate', [TeacherController::class, 'teacherCreate'])->name('teacherCreate')->middleware('ValidTeacher');;
+Route::post('/teacherCreate', [TeacherController::class, 'teacherCreateSubmitted'])->name('teacherCreate');
+Route::get('/teacherList', [TeacherController::class, 'teacherList'])->name('teacherList')->middleware('ValidTeacher');;
 
 //Teacher Course
-Route::get('/teacher/courses/{id}',[TeacherController::class,'teacherCourses'])->name('teacher.courses')->middleware('ValidTeacher');
+Route::get('/teacher/courses/{id}', [TeacherController::class, 'teacherCourses'])->name('teacher.courses')->middleware('ValidTeacher');
 //course
-Route::get('/courses',[CourseController::class,'courseTeacher'])->name('teacher.courses'); 
+Route::get('/courses', [CourseController::class, 'courseTeacher'])->name('teacher.courses');
 
 //Teacher login
-Route::get('/login',[LoginController::class,'login'])->name('login');
-Route::post('/login',[LoginController::class,'loginSubmit'])->name('login');
-Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'loginSubmit'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //teacher dash
-Route::get('/teacher/dash', [TeacherController::class,'teacherDash'])->name('teacherDash')->middleware('ValidTeacher'); 
+Route::get('/teacher/dash', [TeacherController::class, 'teacherDash'])->name('teacherDash')->middleware('ValidTeacher');
+
+//user
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'loginSubmit'])->name('login');
+Route::get('/userEdit/{id}', [UserController::class, 'userEdit'])->name('userEdit');
+Route::post('/userEdit', [UserController::class, 'userEditSubmitted'])->name('userEdit');
+Route::get('/userCreate', [UserController::class, 'userCreate'])->name('userCreate');
+Route::post('/userCreate', [UserController::class, 'userCreateSubmitted'])->name('userCreate');
+Route::get('/userList', [UserController::class, 'userList'])->name('userList');

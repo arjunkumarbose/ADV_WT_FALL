@@ -7,10 +7,12 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('ValidTeacher');
     }
-    public function studentList(){
+    public function studentList()
+    {
         // $student = array();
 
         // for($i=0; $i<5; $i++){
@@ -21,46 +23,51 @@ class StudentController extends Controller
         //     );
         //     $students[] = (object)$student; 
         // }
-        $students = Student::all(); 
+        $students = Student::all();
 
         return view('student.studentList')->with('students', $students);
     }
-    public function studentEdit(Request $request){
+    public function studentEdit(Request $request)
+    {
         $student = Student::where('id', $request->id)->first();
         // return $student;
         return view('student.studentEdit')->with('student', $student);
         // return view('student.studentCreate')->with('student', $student);
 
     }
-    public function studentEditSubmitted(Request $request){
+    public function studentEditSubmitted(Request $request)
+    {
         $student = Student::where('id', $request->id)->first();
         // return  $student;
         $student->name = $request->name;
         $student->id = $request->id;
         $student->save();
         return redirect()->route('studentList');
-
     }
 
-    public function studentDelete(Request $request){
+    public function studentDelete(Request $request)
+    {
         $student = Student::where('id', $request->id)->first();
         $student->delete();
 
         return redirect()->route('studentList');
     }
-    public function studentCreate(){
+    public function studentCreate()
+    {
         return view('student.studentCreate');
     }
-    public function studentCreateSubmitted(Request $request){
-        $validate = $request->validate([
-            "name"=>"required|min:5|max:20",
-            "id"=>"required",
-            'dob'=>'required',
-            'email'=>'email',
-            'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/'
-        ],
-        ['name.required'=>"Please put you name here"]
-    );
+    public function studentCreateSubmitted(Request $request)
+    {
+        $validate = $request->validate(
+            [
+                "name" => "required|min:5|max:20",
+                "id" => "required",
+                'dob' => 'required',
+                'email' => 'email',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/'
+            ],
+            ['name.required' => "Please put you name here"]
+        );
         $student = new  Student();
         $student->name = $request->name;
         $student->id = $request->id;
@@ -68,6 +75,5 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()->route('studentList');
-    
     }
 }
